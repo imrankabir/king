@@ -5,14 +5,12 @@ const icons = {
   'سپاہی': '🛡️',
   'چور': '🕵️'
 };
-
 let initPlayers = [
   { name: 'کھلاڑی 1', role: '', score: 0 },
   { name: 'کھلاڑی 2', role: '', score: 0 },
   { name: 'کھلاڑی 3', role: '', score: 0 },
   { name: 'کھلاڑی 4', role: '', score: 0 },
 ];
-
 const wrongSound = new Audio('sounds/wrong.mp3');
 const correctSound = new Audio('sounds/correct.mp3');
 
@@ -67,15 +65,18 @@ const showGuessOption = e => {
   const { players } = get('players', {players: initPlayers});
   const minister = players.find(p => p.role === 'وزیر');
   const guessArea = document.querySelector('#guessArea');
-  guessArea.innerHTML = `<h3>${minister.name} چور کا اندازہ لگائیں:</h3>`;
+  guessArea.innerHTML = `<h3>${minister.name}: چور کا اندازہ لگائیں</h3>`;
+  const btns = document.createElement('div');
+  btns.className = 'btns';
   players.forEach(p => {
     if (p.role != 'بادشاہ' && p.name !== minister.name) {
       const spanBtn = document.createElement('span');
       spanBtn.textContent = p.name;
       spanBtn.className = 'btn';
       spanBtn.onclick = () => makeGuess(p.name);
-      guessArea.appendChild(spanBtn);
+      btns.appendChild(spanBtn);
     }
+    guessArea.appendChild(btns);
   });
 };
 
@@ -111,7 +112,7 @@ const makeGuess = guessedName => {
   set('roundHistory', {roundHistory});
 
   renderPlayers(true);
-  document.querySelector('#guessArea').innerHTML = `<h3>چور تھا: ${thief.name} — ${correct ? 'صحیح اندازہ!' : 'غلط اندازہ!'}</h3>`;
+  document.querySelector('#guessArea').innerHTML = `<h3>چور تھا ${thief.name}: — ${correct ? 'صحیح اندازہ!' : 'غلط اندازہ!'}</h3>`;
   showScores();
   showHistory();
   setTimeout(e => {

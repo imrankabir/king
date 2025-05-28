@@ -4,8 +4,9 @@ body {
   background: #f9f9f9;
   font-family: 'Noto Nastaliq Urdu', serif;
 }
-h1 {
-  font-size: 2rem;
+h5 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 .hide {
   display: none!important;
@@ -35,9 +36,21 @@ h1 {
   height: 64px;
 }
 .scores, .history {
+  gap: 20px;
+  display: flex;
   direction: rtl;
   margin-top: 20px;
   text-align: right;
+  align-items: center;
+}
+.scores {
+  justify-content: center;
+  /*align-items: center;*/
+}
+.history {
+  flex-direction: column;
+  justify-content: center;
+  /*align-items: center;*/
 }
 .btn {
   margin: 0;
@@ -68,7 +81,15 @@ h1 {
 }
 .secondary {
   color: #fff;
-  background: #e00;
+  padding: 5px;
+  font-size: .8rem;
+  background: #900;
+}
+.btns {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 }
 .btn:focus {
   outline: 1px dotted;
