@@ -42,7 +42,7 @@ function startGame() {
 }
 
 function renderPlayers(reveal = false) {
-  const container = document.getElementById('players');
+  const container = document.querySelector('#players');
   container.innerHTML = '';
   players.forEach(p => {
     const div = document.createElement('div');
@@ -58,14 +58,15 @@ function renderPlayers(reveal = false) {
 
 function showGuessOption() {
   const minister = players.find(p => p.role === 'وزیر');
-  const guessArea = document.getElementById('guessArea');
+  const guessArea = document.querySelector('#guessArea');
   guessArea.innerHTML = `<h3>${minister.name} چور کا اندازہ لگائیں:</h3>`;
   players.forEach(p => {
     if (p.role != 'بادشاہ' && p.name !== minister.name) {
-      const btn = document.createElement('button');
-      btn.textContent = p.name;
-      btn.onclick = () => makeGuess(p.name);
-      guessArea.appendChild(btn);
+      const spanBtn = document.createElement('span');
+      spanBtn.textContent = p.name;
+      spanBtn.className = 'btn';
+      spanBtn.onclick = () => makeGuess(p.name);
+      guessArea.appendChild(spanBtn);
     }
   });
 }
@@ -98,13 +99,24 @@ function makeGuess(guessedName) {
   });
 
   renderPlayers(true);
-  document.getElementById('guessArea').innerHTML = `<h3>چور تھا: ${thief.name} — ${correct ? 'صحیح اندازہ!' : 'غلط اندازہ!'}</h3>`;
+  document.querySelector('#guessArea').innerHTML = `<h3>چور تھا: ${thief.name} — ${correct ? 'صحیح اندازہ!' : 'غلط اندازہ!'}</h3>`;
   showScores();
   showHistory();
 }
 
+document.querySelectorAll('span.btn').forEach(btn => {
+  btn.setAttribute('tabindex', '0');
+  btn.setAttribute('role', 'button');
+  btn.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      btn.click();
+    }
+  });
+});
+
 function showScores() {
-  const scoreDiv = document.getElementById('scores');
+  const scoreDiv = document.querySelector('#scores');
   scoreDiv.innerHTML = '<h3>اسکور:</h3>';
   players.forEach(p => {
     const pDiv = document.createElement('div');
@@ -114,7 +126,7 @@ function showScores() {
 }
 
 function showHistory() {
-  const container = document.getElementById('history');
+  const container = document.querySelector('#history');
   container.innerHTML = '<h3>راؤنڈ ہسٹری:</h3>';
   roundHistory.forEach(entry => {
     const div = document.createElement('div');
