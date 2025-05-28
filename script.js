@@ -54,7 +54,7 @@ const renderPlayers = (reveal = false) => {
     div.className = 'card';
     div.innerHTML = `
       <strong>${p.name}</strong>
-      <div style="font-size: 40px;">${reveal || (p.role == 'بادشاہ' || p.role == 'وزیر') ? icons[p.role] : '❓'}</div>
+      <div style="font-size: 24px;">${reveal || (p.role == 'بادشاہ' || p.role == 'وزیر') ? icons[p.role] : '❓'}</div>
       <div>${reveal ? p.role : '<span class="hidden-role">؟</span>'}</div>
     `;
     container.appendChild(div);
@@ -112,13 +112,13 @@ const makeGuess = guessedName => {
   set('roundHistory', {roundHistory});
 
   renderPlayers(true);
-  document.querySelector('#guessArea').innerHTML = `<h3>چور تھا ${thief.name}: — ${correct ? 'صحیح اندازہ!' : 'غلط اندازہ!'}</h3>`;
+  document.querySelector('#guessArea').innerHTML = `<h3>چور تھا ${thief.name}: — ${correct ? 'صحیح اندازہ' : 'غلط اندازہ'}</h3>`;
   showScores();
   showHistory();
   setTimeout(e => {
     set('roles', {roles: []});
     startGame();
-  }, 2000);
+  }, 3000);
 };
 
 document.querySelectorAll('span.btn').forEach(btn => {
@@ -138,11 +138,11 @@ const showScores = e => {
   const { roundHistory } = get('roundHistory', {roundHistory: []});
   if (roundHistory.length > 0) {
     const { players } = get('players', {players: initPlayers});
-    scoreDiv.innerHTML = '<h3>اسکور:</h3>';
+    // scoreDiv.innerHTML = '<h3>اسکور:</h3>';
     players.sort((a, b) => b.score - a.score);
     players.forEach(p => {
       const pDiv = document.createElement('div');
-      pDiv.textContent = `${p.name}: ${p.score}`;
+      pDiv.innerHTML = `${p.name}: <b>${p.score}</b>`;
       scoreDiv.appendChild(pDiv);
     });
   }
@@ -153,7 +153,7 @@ const showHistory = e => {
   container.innerHTML = '';
   const { roundHistory } = get('roundHistory', {roundHistory: []});
   if (roundHistory.length > 0) {
-    container.innerHTML = '<h3>راؤنڈ ہسٹری:</h3>';
+    // container.innerHTML = '<h3>راؤنڈ ہسٹری:</h3>';
     roundHistory.forEach(entry => {
       const div = document.createElement('div');
       div.className = 'history-entry';

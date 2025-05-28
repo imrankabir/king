@@ -1,26 +1,25 @@
 body {
-  padding: 20px;
   text-align: center;
   background: #f9f9f9;
   font-family: 'Noto Nastaliq Urdu', serif;
 }
 h5 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 .hide {
   display: none!important;
 }
 .players {
-  gap: 20px;
+  gap: 10px;
   display: flex;
   margin: 20px 0;
   flex-wrap: wrap;
   justify-content: center;
 }
 .card {
-  width: 120px;
-  height: 180px;
+  width: 80px;
+  height: 120px;
   display: flex;
   background: white;
   position: relative;
@@ -28,29 +27,43 @@ h5 {
   align-items: center;
   border: 2px solid #aaa;
   flex-direction: column;
-  justify-content: center;
   box-shadow: 0 0 5px #999;
+  justify-content: space-between;
 }
-.card img {
-  width: 64px;
-  height: 64px;
+.guess-area {
+  display: flex;
+  height: 120px;
+  flex-direction: column;
+  justify-content: center;
+}
+@media(min-width: 420px) {
+  .card strong {
+    padding: 0;
+    margin: 0;
+    height: 20%;
+  }
+  .card div {
+    padding: 0;
+    margin: 0;
+    height: 40%;
+  }
 }
 .scores, .history {
-  gap: 20px;
   display: flex;
   direction: rtl;
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: right;
   align-items: center;
 }
 .scores {
   justify-content: center;
-  /*align-items: center;*/
 }
 .history {
+  padding-top: 430px;
+  overflow: auto;
   flex-direction: column;
   justify-content: center;
-  /*align-items: center;*/
+  height: calc(100svh - 840px);
 }
 .btn {
   margin: 0;
@@ -86,8 +99,8 @@ h5 {
   background: #900;
 }
 .btns {
-  display: flex;
   gap: 10px;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
