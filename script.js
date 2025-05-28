@@ -1,4 +1,4 @@
-const roles = ['بادشاہ', 'وزیر', 'سپاہی', 'چور'];
+const initRoles = ['بادشاہ', 'وزیر', 'سپاہی', 'چور'];
 const icons = {
   'بادشاہ': '👑',
   'وزیر': '🧔',
@@ -6,7 +6,7 @@ const icons = {
   'چور': '🕵️'
 };
 
-let roundHistory = [];
+// let roundHistory = [];
 let players = [
   { name: 'کھلاڑی 1', role: '', score: 0 },
   { name: 'کھلاڑی 2', role: '', score: 0 },
@@ -34,9 +34,14 @@ const shuffle = array => {
 };
 
 const startGame = e => {
-  const roleList = [...roles];
-  shuffle(roleList);
-  players.forEach((p, i) => p.role = roleList[i]);
+  let { roles } = get('roles', {roles: []});
+  if (roles.length == 0) {
+    roles = initRoles;
+    shuffle(roles);
+    set('roles', {roles});
+  }
+  console.log(roles);
+  players.forEach((p, i) => p.role = roles[i]);
   renderPlayers();
   showGuessOption();
 };
