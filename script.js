@@ -17,31 +17,31 @@ let players = [
 const wrongSound = new Audio('sounds/wrong.mp3');
 const correctSound = new Audio('sounds/correct.mp3');
 
-const get = (k, d) => JSON.parse(localStorage.getItem(`hangman-${k}`)) ?? d;
-const set = (k, v) => localStorage.setItem(`hangman-${k}`, JSON.stringify(v));
-const remove = (k) => localStorage.removeItem(`hangman-${k}`);
+const get = (k, d) => JSON.parse(localStorage.getItem(`king-${k}`)) ?? d;
+const set = (k, v) => localStorage.setItem(`king-${k}`, JSON.stringify(v));
+const remove = k => localStorage.removeItem(`king-${k}`);
 
 const playSound = sound => {
     sound.currentTime = 0;
     sound.play();
 };
 
-function shuffle(array) {
+const shuffle = array => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-}
+};
 
-function startGame() {
+const startGame = e => {
   const roleList = [...roles];
   shuffle(roleList);
   players.forEach((p, i) => p.role = roleList[i]);
   renderPlayers();
   showGuessOption();
-}
+};
 
-function renderPlayers(reveal = false) {
+const renderPlayers = (reveal = false) => {
   const container = document.querySelector('#players');
   container.innerHTML = '';
   players.forEach(p => {
@@ -54,9 +54,9 @@ function renderPlayers(reveal = false) {
     `;
     container.appendChild(div);
   });
-}
+};
 
-function showGuessOption() {
+const showGuessOption = e => {
   const minister = players.find(p => p.role === 'وزیر');
   const guessArea = document.querySelector('#guessArea');
   guessArea.innerHTML = `<h3>${minister.name} چور کا اندازہ لگائیں:</h3>`;
@@ -69,9 +69,9 @@ function showGuessOption() {
       guessArea.appendChild(spanBtn);
     }
   });
-}
+};
 
-function makeGuess(guessedName) {
+const makeGuess = guessedName => {
   const thief = players.find(p => p.role === 'چور');
   const minister = players.find(p => p.role === 'وزیر');
   const king = players.find(p => p.role === 'بادشاہ');
@@ -103,7 +103,7 @@ function makeGuess(guessedName) {
   setTimeout(e => startGame(), 2000);
   showScores();
   showHistory();
-}
+};
 
 document.querySelectorAll('span.btn').forEach(btn => {
   btn.setAttribute('tabindex', '0');
@@ -116,7 +116,7 @@ document.querySelectorAll('span.btn').forEach(btn => {
   });
 });
 
-function showScores() {
+const showScores = e => {
   const scoreDiv = document.querySelector('#scores');
   scoreDiv.innerHTML = '<h3>اسکور:</h3>';
   players.forEach(p => {
@@ -124,9 +124,9 @@ function showScores() {
     pDiv.textContent = `${p.name} (${p.role}): ${p.score}`;
     scoreDiv.appendChild(pDiv);
   });
-}
+};
 
-function showHistory() {
+const showHistory = e => {
   const container = document.querySelector('#history');
   container.innerHTML = '<h3>راؤنڈ ہسٹری:</h3>';
   roundHistory.forEach(entry => {
@@ -140,7 +140,7 @@ function showHistory() {
     `;
     container.appendChild(div);
   });
-}
+};
 
 (e => {
     startGame();
