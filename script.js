@@ -1,0 +1,124 @@
+const roles = ['بادشاہ', 'وزیر', 'سپاہی', 'چور'];
+const icons = {
+  'بادشاہ': '👑',
+  'وزیر': '🧔',
+  'سپاہی': '🛡️',
+  'چور': '🕵️'
+};
+
+let roundHistory = [];
+let players = [
+  { name: 'کھلاڑی 1', role: '', score: 0 },
+  { name: 'کھلاڑی 2', role: '', score: 0 },
+  { name: 'کھلاڑی 3', role: '', score: 0 },
+  { name: 'کھلاڑی 4', role: '', score: 0 },
+];
+
+const get = (k, d) => JSON.parse(localStorage.getItem(`hangman-${k}`)) ?? d;
+const set = (k, v) => localStorage.setItem(`hangman-${k}`, JSON.stringify(v));
+const remove = (k) => localStorage.removeItem(`hangman-${k}`);
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function startGame() {
+  const roleList = [...roles];
+  shuffle(roleList);
+  players.forEach((p, i) => p.role = roleList[i]);
+  renderPlayers();
+  showGuessOption();
+}
+
+function renderPlayers(reveal = false) {
+  const container = document.getElementById('players');
+  container.innerHTML = '';
+  players.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `
+      <strong>${p.name}</strong>
+      <div style="font-size: 40px;">${reveal || (p.role == 'بادشاہ' || p.role == 'وزیر') ? icons[p.role] : '❓'}</div>
+      <div>${reveal ? p.role : '<span class="hidden-role"></span>'}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function showGuessOption() {
+  const minister = players.find(p => p.role === 'وزیر');
+  const guessArea = document.getElementById('guessArea');
+  guessArea.innerHTML = `<h3>${minister.name} چور کا اندازہ لگائیں:</h3>`;
+  players.forEach(p => {
+    if (p.role != 'بادشاہ' && p.name !== minister.name) {
+      const btn = document.createElement('button');
+      btn.textContent = p.name;
+      btn.onclick = () => makeGuess(p.name);
+      guessArea.appendChild(btn);
+    }
+  });
+}
+
+function makeGuess(guessedName) {
+  const thief = players.find(p => p.role === 'چور');
+  const minister = players.find(p => p.role === 'وزیر');
+  const king = players.find(p => p.role === 'بادشاہ');
+  const soldier = players.find(p => p.role === 'سپاہی');
+
+  let correct = guessedName === thief.name;
+
+  king.score += 100;
+  soldier.score += 80;
+  if (correct) {
+    minister.score += 90;
+    thief.score += 0;
+  } else {
+    minister.score += 0;
+    thief.score += 90;
+  }
+
+  roundHistory.unshift({
+    round: roundHistory.length + 1,
+    roles: players.map(p => ({ name: p.name, role: p.role })),
+    guess: guessedName,
+    correct
+  });
+
+  renderPlayers(true);
+  document.getElementById('guessArea').innerHTML = `<h3>چور تھا: ${thief.name} — ${correct ? 'صحیح اندازہ!' : 'غلط اندازہ!'}</h3>`;
+  showScores();
+  showHistory();
+}
+
+function showScores() {
+  const scoreDiv = document.getElementById('scores');
+  scoreDiv.innerHTML = '<h3>اسکور:</h3>';
+  players.forEach(p => {
+    const pDiv = document.createElement('div');
+    pDiv.textContent = `${p.name} (${p.role}): ${p.score}`;
+    scoreDiv.appendChild(pDiv);
+  });
+}
+
+function showHistory() {
+  const container = document.getElementById('history');
+  container.innerHTML = '<h3>راؤنڈ ہسٹری:</h3>';
+  roundHistory.forEach(entry => {
+    const div = document.createElement('div');
+    div.className = 'history-entry';
+    const roleList = entry.roles.map(r => `${r.name}: ${r.role}`).join('، ');
+    div.innerHTML = `
+      <strong>راؤنڈ ${entry.round}</strong><br>
+      ${roleList}<br>
+      وزیر کا اندازہ: ${entry.guess} — ${entry.correct ? 'درست' : 'غلط'}
+    `;
+    container.appendChild(div);
+  });
+}
+
+(e => {
+    
+})();
