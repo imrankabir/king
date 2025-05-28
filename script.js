@@ -100,6 +100,7 @@ function makeGuess(guessedName) {
 
   renderPlayers(true);
   document.querySelector('#guessArea').innerHTML = `<h3>چور تھا: ${thief.name} — ${correct ? 'صحیح اندازہ!' : 'غلط اندازہ!'}</h3>`;
+  setTimeout(e => startGame(), 2000);
   showScores();
   showHistory();
 }

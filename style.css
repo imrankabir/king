@@ -7,6 +7,9 @@ body {
 h1 {
   font-size: 2rem;
 }
+.hide {
+  display: none!important;
+}
 .players {
   gap: 20px;
   display: flex;
