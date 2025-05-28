@@ -66,6 +66,10 @@ h1 {
   border-color: buttonborder;
   -webkit-appearance: button;
 }
+.secondary {
+  color: #fff;
+  background: #e00;
+}
 .btn:focus {
   outline: 1px dotted;
   outline: 5px auto -webkit-focus-ring-color;
