@@ -14,9 +14,17 @@ let players = [
   { name: 'کھلاڑی 4', role: '', score: 0 },
 ];
 
+const wrongSound = new Audio('sounds/wrong.mp3');
+const correctSound = new Audio('sounds/correct.mp3');
+
 const get = (k, d) => JSON.parse(localStorage.getItem(`hangman-${k}`)) ?? d;
 const set = (k, v) => localStorage.setItem(`hangman-${k}`, JSON.stringify(v));
 const remove = (k) => localStorage.removeItem(`hangman-${k}`);
+
+const playSound = sound => {
+    sound.currentTime = 0;
+    sound.play();
+};
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -75,9 +83,11 @@ function makeGuess(guessedName) {
   if (correct) {
     minister.score += 90;
     thief.score += 0;
+    playSound(correctSound);
   } else {
     minister.score += 0;
     thief.score += 90;
+    playSound(wrongSound);
   }
 
   roundHistory.unshift({
@@ -120,5 +130,5 @@ function showHistory() {
 }
 
 (e => {
-    
+    startGame();
 })();
