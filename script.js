@@ -139,9 +139,10 @@ const showScores = e => {
   if (roundHistory.length > 0) {
     const { players } = get('players', {players: initPlayers});
     scoreDiv.innerHTML = '<h3>اسکور:</h3>';
+    players.sort((a, b) => b.score - a.score);
     players.forEach(p => {
       const pDiv = document.createElement('div');
-      pDiv.textContent = `${p.name} (${p.role}): ${p.score}`;
+      pDiv.textContent = `${p.name}: ${p.score}`;
       scoreDiv.appendChild(pDiv);
     });
   }
