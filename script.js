@@ -6,7 +6,6 @@ const icons = {
   'چور': '🕵️'
 };
 
-// let roundHistory = [];
 let initPlayers = [
   { name: 'کھلاڑی 1', role: '', score: 0 },
   { name: 'کھلاڑی 2', role: '', score: 0 },
@@ -58,7 +57,7 @@ const renderPlayers = (reveal = false) => {
     div.innerHTML = `
       <strong>${p.name}</strong>
       <div style="font-size: 40px;">${reveal || (p.role == 'بادشاہ' || p.role == 'وزیر') ? icons[p.role] : '❓'}</div>
-      <div>${reveal ? p.role : '<span class="hidden-role"></span>'}</div>
+      <div>${reveal ? p.role : '<span class="hidden-role">؟</span>'}</div>
     `;
     container.appendChild(div);
   });
