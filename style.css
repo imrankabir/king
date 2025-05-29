@@ -11,14 +11,14 @@ h5 {
   display: none!important;
 }
 .players {
-  gap: 10px;
+  gap: 5px;
   display: flex;
   margin: 20px 0;
   flex-wrap: wrap;
   justify-content: center;
 }
 .card {
-  width: 80px;
+  width: 75px;
   height: 120px;
   display: flex;
   background: white;
