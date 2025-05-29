@@ -12,8 +12,8 @@ body {
   font-family: 'Noto Nastaliq Urdu', serif;
 }
 h5 {
-  margin: 0;
   font-size: 1rem;
+  margin: 5px 0 0 0;
 }
 .hide {
   display: none!important;
@@ -70,7 +70,12 @@ h5 {
 .history {
   overflow: auto;
   flex-direction: column;
-  height: calc(100svh - 450px);
+  height: calc(100svh - 380px);
+}
+@media(min-width: 420px) {
+  .history {
+    height: calc(100vh - 400px);
+  }
 }
 .btn {
   margin: 0;
