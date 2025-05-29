@@ -1,3 +1,11 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+}
 body {
   text-align: center;
   background: #f9f9f9;
@@ -60,11 +68,9 @@ h5 {
   justify-content: center;
 }
 .history {
-  padding-top: 430px;
   overflow: auto;
   flex-direction: column;
-  justify-content: center;
-  height: calc(100svh - 840px);
+  height: calc(100svh - 450px);
 }
 .btn {
   margin: 0;
@@ -118,4 +124,10 @@ h5 {
   border-radius: 8px;
   margin-bottom: 10px;
   border: 1px solid #ddd;
+}
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: #999;
 }
