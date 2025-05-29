@@ -5,16 +5,12 @@ const icons = {
   'سپاہی': '🛡️',
   'چور': '🕵️'
 };
-
-// let initPlayers = [
-//   { name: 'کھلاڑی 1', role: '', score: 0 },
-//   { name: 'کھلاڑی 2', role: '', score: 0 },
-//   { name: 'کھلاڑی 3', role: '', score: 0 },
-//   { name: 'کھلاڑی 4', role: '', score: 0 },
-// ];
-
-const defaultNames = ['کھلاڑی 1', 'کھلاڑی 2', 'کھلاڑی 3', 'کھلاڑی 4'];
-
+let initPlayers = [
+  { name: 'کھلاڑی 1', role: '', score: 0 },
+  { name: 'کھلاڑی 2', role: '', score: 0 },
+  { name: 'کھلاڑی 3', role: '', score: 0 },
+  { name: 'کھلاڑی 4', role: '', score: 0 },
+];
 const wrongSound = new Audio('sounds/wrong.mp3');
 const correctSound = new Audio('sounds/correct.mp3');
 
@@ -25,28 +21,6 @@ const remove = k => localStorage.removeItem(`king-${k}`);
 const playSound = sound => {
     sound.currentTime = 0;
     sound.play();
-};
-
-const getSavedNames = () => get('playerNames', { names: defaultNames }).names;
-
-let initPlayers = getSavedNames().map(name => ({ name, role: '', score: 0 }));
-
-const savePlayerNames = () => {
-  const names = [
-    document.querySelector('#p1').value.trim() || defaultNames[0],
-    document.querySelector('#p2').value.trim() || defaultNames[1],
-    document.querySelector('#p3').value.trim() || defaultNames[2],
-    document.querySelector('#p4').value.trim() || defaultNames[3],
-  ];
-  set('playerNames', { names });
-  document.querySelector('#nameInputArea').style.display = 'none';
-
-  const players = names.map(name => ({ name, role: '', score: 0 }));
-  set('players', { players });
-
-  startGame();
-  showScores();
-  showHistory();
 };
 
 const shuffle = array => {
@@ -198,20 +172,13 @@ const startGameAgain = e => {
   remove('roles');
   remove('players');
   remove('roundHistory');
-  remove('playerNames');
   startGame();
   showScores();
   showHistory();
-  location.reload();
 };
 
 (e => {
-    const saved = get('playerNames', null);
-    if (!saved) {
-      document.querySelector('#nameInputArea').style.display = 'block';
-    } else {
-      startGame();
-      showScores();
-      showHistory();
-    }
+    startGame();
+    showScores();
+    showHistory();
 })();
