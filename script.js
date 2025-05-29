@@ -54,8 +54,8 @@ const renderPlayers = (reveal = false) => {
     div.className = 'card';
     div.innerHTML = `
       <strong>${p.name}</strong>
-      <div style="font-size: 24px;">${reveal || (p.role == 'بادشاہ' || p.role == 'وزیر') ? icons[p.role] : '❓'}</div>
-      <div>${reveal ? p.role : '<span class="hidden-role">؟</span>'}</div>
+      <div style="font-size: 24px;">${(reveal || p.role == 'بادشاہ' || p.role == 'وزیر') ? icons[p.role] : '❓'}</div>
+      <div>${(reveal || p.role == 'بادشاہ' || p.role == 'وزیر') ? p.role : '<span class="hidden-role">؟</span>'}</div>
     `;
     container.appendChild(div);
   });
